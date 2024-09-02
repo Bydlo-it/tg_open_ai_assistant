@@ -1,4 +1,5 @@
 import logging
+import re
 
 from aiogram import Router, F
 from aiogram.filters import Command
@@ -72,7 +73,8 @@ async def on_text_message(message: Message,
                 for cont in answer.content:
                     if isinstance(cont, TextContentBlock):
                         text = cont.text
-                        await message.answer(text=text.value)
+                        await message.answer(text=re.sub(r'(\*{2,}|_{2,}|`{2,}|~{2,}|【.*?†source】)', '', text.value))
+                        # await message.answer(text=re.sub(r'(\*{2,}|_{2,}|`{2,}|~{2,})', '', text.value))
 
     except Exception:
         logger.exception("Ошибка запроса")
